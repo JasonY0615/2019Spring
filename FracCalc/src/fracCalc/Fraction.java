@@ -4,7 +4,7 @@ public class Fraction {
 	private int whole;
 	private int numerator; 
 	private int denominator; 
-	private String fractionStr; 
+
  
 	public Fraction() { 
 	whole = 0; 
@@ -15,14 +15,29 @@ public class Fraction {
 	
 	
 	public Fraction(String oprand) {
-		String[] wholesplit = oprand.split("_"); 
-		String[] rest = wholesplit[1].split("/"); 
-		whole = Integer.parseInt(wholesplit[0]); 
-		numerator = Integer.parseInt(rest[0]); 
-		denominator = Integer.parseInt(rest[1]);
-		toImproperFrac(); 
-	}
-	
+
+        if (oprand.indexOf("/") != -1){
+        	numerator = Integer.parseInt(oprand.substring(oprand.indexOf("_") + 1, oprand.indexOf("/")));
+            denominator = Integer.parseInt(oprand.substring(oprand.indexOf("/") + 1, oprand.length()));
+            if (oprand.indexOf("_") != -1){ 
+              whole = Integer.parseInt(oprand.substring(0, oprand.indexOf("_")));
+              if(whole <0){
+            	  numerator = (whole * denominator) - numerator;
+              }
+              else {
+            	  numerator = (whole * denominator) + numerator;
+              }
+            }
+            else {
+            	whole = 0;             
+        }
+        }
+            else {
+            	numerator = Integer.parseInt(oprand);
+            	denominator = 1;
+            	}
+            }
+    
 	private void toImproperFrac() {
 		numerator = denominator * whole + numerator; 
 		whole= 0; 		
@@ -50,6 +65,7 @@ public class Fraction {
       else if(operator.equals("/")) { 
       	answer = (Division(fraction2)); 
       }
+		answer.reduce();
 		return answer; 
 }
 	public Fraction addition(Fraction fraction2) { 
@@ -92,48 +108,49 @@ public class Fraction {
     	answer.denominator = (this.denominator*fraction2.numerator); 
     	return answer; 
     }
-	public Fraction reducedNum (Fraction answer) { 
-		 Fraction answer = new Fraction (); 
+	public void reduce () { 
 		//use gcf to reduce
-		answer.numerator = answer.numerator / gcf(answer.numerator,answer.denominator); 
-		answer.denominator = answer.denominator / gcf(answer.numerator,answer.denominator ); 
-		return answer;
+		numerator = numerator / gcf(numerator,denominator); 
+		denominator = denominator / gcf(numerator,denominator ); 
+		
 	}
 	public Fraction toMixedNum(Fraction answer) { 
-		answer.whole= answer[0] / answer[1]; // whole
-		answer.remainder= answer[0] % answer[1]; // remainder
-		int denominator = answer[1]
-;			
+		answer.whole= answer.numerator / answer.denominator; // whole
+		answer.numerator= answer.numerator % answer.denominator; // remainder;	
+		return answer;
+	}
+	public String toString(){
+		
 		String answerStr="";
-		if (wholenum != 0) {   
-			if (remainder != 0) {
-				if (wholenum < 0) {
-					remainder = remainder * -1; 
-					answerStr = wholenum + "_" + remainder + "/" + denominator; 
+		if (whole != 0) {   
+			if (numerator != 0) {
+				if (whole < 0) {
+					numerator = numerator * -1; 
+					answerStr = whole + "_" + numerator + "/" + denominator; 
 				}
-				if (remainder < 0 && denominator <0) {
-					remainder = remainder * -1; 
+				if (numerator < 0 && denominator <0) {
+					numerator = numerator * -1; 
 					denominator = denominator * -1; 
-					answerStr = wholenum + "_" + remainder + "/" + denominator;
+					answerStr = whole + "_" + numerator + "/" + denominator;
 				}
 				else { 
-				answerStr = wholenum + "_" + remainder + "/" + denominator ;
+				answerStr = whole + "_" + numerator + "/" + denominator ;
 			}
 			}// if both num and deno are nega then return posi
 			else { 
 				if(denominator == 1) {
-					answerStr = Integer.toString(wholenum);
+					answerStr = Integer.toString(whole);
 				}
 				else if (denominator == -1) {
-					wholenum = wholenum * -1; 
-					answerStr = Integer.toString(wholenum);
+					whole = whole * -1; 
+					answerStr = Integer.toString(whole);
 				}
 				                                                          
 			}
 		}
 		else { 
-			if (remainder != 0) {
-				answerStr = remainder + "/" + denominator; 
+			if (numerator != 0) {
+				answerStr = numerator + "/" + denominator; 
 			}
 			else {
 				answerStr = "0"; 

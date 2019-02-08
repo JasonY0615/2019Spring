@@ -19,13 +19,12 @@ public class FracCalc {
 
     public static String produceAnswer(String input)
     {
-    	String[] parsedEq = input.split(""); 
-    	Fraction fraction1 = new Fraction(parsedEq[0]); 
-    	Fraction fraction2 = new Fraction(parsedEq[2]);
-    	String operator = parsedEq[1]; 
+    	Fraction fraction1 = new Fraction(input.split(" ")[0]); 
+    	Fraction fraction2 = new Fraction(input.split(" ")[2]);
+    	String operator = input.split(" ")[1]; 
     	Fraction answer = new Fraction (); 
-    	answer = fraction1.doMath(operator, fraction2);
-    	
+    	answer = fraction1.DoMath(operator, fraction2);
+    	//answer = answer.reducedNum(answer);
     	return answer.toString(); 
     	
     }
