@@ -24,9 +24,12 @@ public class FracCalc {
     	String operator = input.split(" ")[1]; 
     	Fraction answer = new Fraction (); 
     	answer = fraction1.DoMath(operator, fraction2);
-    	//answer = answer.reducedNum(answer);
-    	return answer.toString(); 
     	
+    	answer.reduce();
+    	answer.toMixedNum();
+    	return answer.toString();
+   	//Fraction test = new Fraction(-2,0,0);
+   	//return test.toString();
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need

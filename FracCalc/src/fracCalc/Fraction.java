@@ -11,6 +11,11 @@ public class Fraction {
 	numerator = 0; 
 	denominator = 0;
 	}
+	//public Fraction( int a, int b, int c) { 
+	//whole = a; 
+	//numerator = b; 
+	//denominator = c;
+	//}
 	
 	
 	
@@ -28,20 +33,16 @@ public class Fraction {
             	  numerator = (whole * denominator) + numerator;
               }
             }
-            else {
-            	whole = 0;             
+            whole = 0;             
+        
         }
-        }
-            else {
+        
+         else {
             	numerator = Integer.parseInt(oprand);
             	denominator = 1;
-            	}
-            }
+         }
+   }
     
-	private void toImproperFrac() {
-		numerator = denominator * whole + numerator; 
-		whole= 0; 		
-	}
 	
 	public static int gcf(int a, int b) { // a & b are the numerators and denominators, b is the initial denominator 
 	if( b == 0) { //checks if b = 0
@@ -70,27 +71,20 @@ public class Fraction {
 }
 	public Fraction addition(Fraction fraction2) { 
 		  Fraction answer = new Fraction (); 
-    	if(this.denominator == fraction2.denominator) {
-    		answer.numerator = this.numerator + fraction2.denominator;
-    		answer.denominator = this.denominator;
-    	}else { 
-    		answer.numerator= (this.numerator*fraction2.denominator) + (fraction2.numerator*this.denominator);
-    		answer.denominator= this.denominator * fraction2.denominator;
-    	}
+    	
+    	answer.numerator= (this.numerator*fraction2.denominator) + (fraction2.numerator*this.denominator);
+    	answer.denominator= this.denominator * fraction2.denominator;
+    	
     	return answer;
 	}
  
     
     public Fraction subtraction(Fraction fraction2) { 
     	Fraction answer = new Fraction ();
-        if(this.denominator == fraction2.denominator) {
-    		answer.numerator = this.numerator - fraction2.denominator;
-    		answer.denominator = this.denominator;	 
-        }else { 
-    		answer.numerator= (this.numerator*fraction2.denominator) - (fraction2.numerator*this.denominator);
-    		answer.denominator= this.denominator*fraction2.denominator;
+        answer.numerator= (this.numerator*fraction2.denominator) - (fraction2.numerator*this.denominator);
+    	answer.denominator= this.denominator*fraction2.denominator;
         	//return ((op1Num*op2Deno) - (op2Num*op1Deno)) + "/" + op1Deno * op2Deno;
-        }
+        
         return answer; 
     }
  
@@ -114,10 +108,10 @@ public class Fraction {
 		denominator = denominator / gcf(numerator,denominator ); 
 		
 	}
-	public Fraction toMixedNum(Fraction answer) { 
-		answer.whole= answer.numerator / answer.denominator; // whole
-		answer.numerator= answer.numerator % answer.denominator; // remainder;	
-		return answer;
+	public void toMixedNum() { 
+		whole= numerator / denominator; // whole
+		numerator= numerator % denominator; // remainder;	
+		
 	}
 	public String toString(){
 		
@@ -125,7 +119,7 @@ public class Fraction {
 		if (whole != 0) {   
 			if (numerator != 0) {
 				if (whole < 0) {
-					numerator = numerator * -1; 
+					
 					answerStr = whole + "_" + numerator + "/" + denominator; 
 				}
 				if (numerator < 0 && denominator <0) {
@@ -138,11 +132,10 @@ public class Fraction {
 			}
 			}// if both num and deno are nega then return posi
 			else { 
-				if(denominator == 1) {
+				if(whole > 0) {
 					answerStr = Integer.toString(whole);
 				}
-				else if (denominator == -1) {
-					whole = whole * -1; 
+				else if (whole < 0) { 
 					answerStr = Integer.toString(whole);
 				}
 				                                                          
